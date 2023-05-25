@@ -7,9 +7,21 @@
 			}
 		},
 		{
+			"path": "pages/characterDetail/characterDetail",
+			"style": {
+				"navigationBarTitleText": "角色信息"
+			}
+		},
+		{
 			"path": "pages/rank/rank",
 			"style": {
 				"navigationBarTitleText": "天梯"
+			}
+		},
+		{
+			"path": "pages/my/my",
+			"style": {
+				"navigationBarTitleText": "我的"
 			}
 		}
 	],
@@ -26,12 +38,17 @@
 		"color": "#8F8F94",
 		"selectedColor": "#f33e54",
 		"list": [{
-			"pagePath": "pages/characterSearch/characterSearch",
-			"text": "首页"
-		},
-		{
-			"pagePath": "pages/rank/rank",
-			"text": " 天梯"
-		}]
+				"pagePath": "pages/characterSearch/characterSearch",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/rank/rank",
+				"text": " 天梯"
+			},
+			{
+				"pagePath": "pages/my/my",
+				"text": "我的"
+			}
+		]
 	}
 }
