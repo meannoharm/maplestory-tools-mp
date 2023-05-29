@@ -1,25 +1,25 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/characterSearch/characterSearch",
+			"path": "pages/characterSearch/CharacterSearch",
 			"style": {
 				"navigationBarTitleText": "搜索角色"
 			}
 		},
 		{
-			"path": "pages/characterDetail/characterDetail",
+			"path": "pages/characterDetail/CharacterDetail",
 			"style": {
 				"navigationBarTitleText": "角色信息"
 			}
 		},
 		{
-			"path": "pages/rank/rank",
+			"path": "pages/rank/Rank",
 			"style": {
 				"navigationBarTitleText": "天梯"
 			}
 		},
 		{
-			"path": "pages/my/my",
+			"path": "pages/my/My",
 			"style": {
 				"navigationBarTitleText": "我的"
 			}
@@ -31,24 +31,24 @@
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
-	"uniIdRouter": {},
-	"tabBar": {
-		"borderStyle": "black",
-		"backgroundColor": "#333",
-		"color": "#8F8F94",
-		"selectedColor": "#f33e54",
-		"list": [{
-				"pagePath": "pages/characterSearch/characterSearch",
-				"text": "首页"
-			},
-			{
-				"pagePath": "pages/rank/rank",
-				"text": " 天梯"
-			},
-			{
-				"pagePath": "pages/my/my",
-				"text": "我的"
-			}
-		]
-	}
+	"uniIdRouter": {}
+	// "tabBar": {
+	// 	"borderStyle": "black",
+	// 	"backgroundColor": "#333",
+	// 	"color": "#8F8F94",
+	// 	"selectedColor": "#f33e54",
+	// 	"list": [{
+	// 			"pagePath": "pages/characterSearch/CharacterSearch",
+	// 			"text": "首页"
+	// 		},
+	// 		{
+	// 			"pagePath": "pages/rank/Rank",
+	// 			"text": " 天梯"
+	// 		},
+	// 		{
+	// 			"pagePath": "pages/my/My",
+	// 			"text": "我的"
+	// 		}
+	// 	]
+	// }
 }

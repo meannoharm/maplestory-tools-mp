@@ -52,13 +52,13 @@
 
 	const handleClick = (autoCompleteItem) => {
 		uni.navigateTo({
-			url: `/pages/characterDetail/characterDetail?name=${autoCompleteItem.Name}&region=${autoCompleteItem.Region}`
+			url: `/pages/characterDetail/CharacterDetail?name=${autoCompleteItem.Name}&region=${autoCompleteItem.Region}`
 		})
 	}
 
 	const handleConfirm = () => {
 		uni.navigateTo({
-			url: `/pages/characterDetail/characterDetail?name=${name.value}`
+			url: `/pages/characterDetail/CharacterDetail?name=${name.value}`
 		})
 	}
 </script>
