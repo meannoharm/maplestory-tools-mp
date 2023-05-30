@@ -1,0 +1,7 @@
+{
+  "name": "get-auto-complete-list",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}

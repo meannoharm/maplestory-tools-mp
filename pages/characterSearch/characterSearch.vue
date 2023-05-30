@@ -22,9 +22,6 @@
 		ref
 	} from 'vue';
 	import {
-		getAutoCompleteList
-	} from "../../api";
-	import {
 		debounce
 	} from "lodash"
 
@@ -43,8 +40,14 @@
 	const autoCompleteList = ref([])
 
 	watch([name, region], debounce(() => {
-		getAutoCompleteList(name.value, region.value).then(res => {
-			autoCompleteList.value = res.data
+		uniCloud.callFunction({
+			name: "get-auto-complete-list",
+			data: {
+				input: name.value,
+				region: region.value
+			}
+		}).then(res => {
+			autoCompleteList.value = res.result.data
 		}).catch(e => {
 			console.error(e)
 		})
@@ -63,7 +66,7 @@
 	}
 </script>
 
-<style lang="less">
+<style lang="scss">
 	.character-search-container {
 		padding: 8px;
 		height: 100vh;

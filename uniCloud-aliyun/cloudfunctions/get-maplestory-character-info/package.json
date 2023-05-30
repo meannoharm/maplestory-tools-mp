@@ -1,0 +1,7 @@
+{
+  "name": "get-maplestory-character-info",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}
