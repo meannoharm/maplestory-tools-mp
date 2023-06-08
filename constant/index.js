@@ -99,3 +99,11 @@ export const iconPathMap = {
 	"Supreme_5": "https://mp-19037f1d-5a0a-45fb-b476-e7007e9c6546.cdn.bspapp.com/cloudstorage/2f4ad2a2-689b-4b94-b808-fc663f4b9eee.webp",
 	"Legion_Coin": "https://mp-19037f1d-5a0a-45fb-b476-e7007e9c6546.cdn.bspapp.com/cloudstorage/d0a18279-5eb0-44b7-9cf2-83108f5ea754.webp"
 }
+
+export const JQLTokenErrorCode = [
+	"TOKEN_INVALID_INVALID_CLIENTID",
+	"TOKEN_INVALID",
+	"TOKEN_INVALID_TOKEN_EXPIRED",
+	"TOKEN_INVALID_WRONG_TOKEN",
+	"TOKEN_INVALID_ANONYMOUS_USER",
+]

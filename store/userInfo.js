@@ -1,15 +1,19 @@
 import {
 	defineStore
 } from 'pinia';
+import {
+	JQLTokenErrorCode
+} from '/constant/index.js'
 
 const db = uniCloud.database();
 const uniIdCo = uniCloud.importObject('uni-id-co');
+const hostUserInfo = uni.getStorageSync('uni-id-pages-userInfo')||{}
 
 export const useUserInfoStore = defineStore('userInfo', {
 	state: () => ({
 		followCharacterList: [],
-		userInfo: {},
-		isLogin: false,
+		userInfo: hostUserInfo,
+		isLogin: Object.keys(hostUserInfo).length != 0,
 	}),
 	actions: {
 		getFollowCharacterList() {
@@ -24,6 +28,13 @@ export const useUserInfoStore = defineStore('userInfo', {
 				}).catch((err) => {
 					console.log(err.code);
 					console.log(err.message);
+					uni.showModal({
+						content: err.message || '关注失败',
+						showCancel: false
+					})
+					if (JQLTokenErrorCode.includes(err.code)) {
+						this.clearUserInfo();
+					}
 				})
 		},
 		followCharacter(name, region) {
@@ -43,6 +54,9 @@ export const useUserInfoStore = defineStore('userInfo', {
 						content: err.message || '关注失败',
 						showCancel: false
 					})
+					if (JQLTokenErrorCode.includes(err.code)) {
+						this.clearUserInfo();
+					}
 				})
 		},
 		unFollowCharacter(name, region) {
@@ -58,6 +72,9 @@ export const useUserInfoStore = defineStore('userInfo', {
 						content: err.message || '取消关注失败',
 						showCancel: false
 					})
+					if (JQLTokenErrorCode.includes(err.code)) {
+						this.clearUserInfo();
+					}
 				});
 		},
 		login() {
@@ -74,13 +91,17 @@ export const useUserInfoStore = defineStore('userInfo', {
 					console.error(e);
 				}
 			}
-			this.isLogin = false;
+			this.clearUserInfo();
 			uni.removeStorageSync('uni_id_token');
 			uni.setStorageSync('uni_id_token_expired', 0);
 			uni.showToast({
 				title: '退出成功',
 				icon: 'none'
 			})
+		},
+		clearUserInfo () {
+			this.isLogin = false;
+			this.userInfo = {}
 		}
 	},
 });

@@ -144,6 +144,7 @@
 				},
 			})
 			.then((res) => {
+				uni.hideLoading();
 				if (res.result.data) {
 					characterData.value = res.result.data.CharacterData;
 				} else {
@@ -152,10 +153,12 @@
 			})
 			.catch((e) => {
 				console.error(e);
-			})
-			.finally(() => {
 				uni.hideLoading();
-			});
+				uni.showToast({
+					title: "查询失败",
+					icon: "none",
+				});
+			})
 	});
 
 	onShow(() => {

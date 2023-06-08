@@ -10,22 +10,26 @@
 				</view>
 			</picker>
 			<uni-easyinput prefixIcon="search" class="name-input" placeholder="角色名称" confirmType="search" v-model="name"
-				:clearable="true" @confirm="handleSearchConfirm">
+				:clearable="true" @confirm="handleSearchConfirm" @focus="isInputFocus = true" @blur="handleBlur">
 			</uni-easyinput>
-
 		</view>
-		<scroll-view v-if="autoCompleteList.length > 0" class="auto-complete-list-container" scroll-y="true">
-			<uni-list>
+<!-- 		<scroll-view v-if="isInputFocus && name" class="auto-complete-list-container" scroll-y="true">
+			<view v-if="isAutoCompleteListLoading" class="loading-container">
+				<view class="loading-icon-container">
+					<uni-icons class="loading-icon" color="#fff" type="spinner-cycle" size="60"></uni-icons>
+				</view>
+			</view>
+			<uni-list v-if="autoCompleteList.length > 0" class="auto-complete-list">
 				<uni-list-item v-for="autoCompleteItem in autoCompleteList" :key="autoCompleteItem.Name"
-					:title="autoCompleteItem.Name" clickable @click="handleAutoCompleteClick(autoCompleteItem)" />
+					:title="autoCompleteItem.Name" :rightText="regionMap[autoCompleteItem.Region]" clickable
+					@click="handleAutoCompleteClick(autoCompleteItem)" />
 			</uni-list>
-		</scroll-view>
+		</scroll-view> -->
 		<uni-section title="关注角色" type="line">
 			<uni-list v-if="userInfoStore.isLogin && userInfoStore.followCharacterList.length > 0">
 				<uni-list-item v-for="followCharacter in userInfoStore.followCharacterList"
 					:key="followCharacter.character_name" :title="followCharacter.character_name" clickable
-					:note="followCharacter.character_region" @click="handleFollowCharacterClick(followCharacter)">
-					<!-- <template #footer>132</template> -->
+					:rightText="followCharacter.character_region" @click="handleFollowCharacterClick(followCharacter)">
 				</uni-list-item>
 			</uni-list>
 			<view v-else-if="!userInfoStore.isLogin" class="tips-container">
@@ -65,7 +69,9 @@
 
 	const name = ref("");
 	const regionIndex = ref(0);
+	const isAutoCompleteListLoading = ref(false);
 	const autoCompleteList = ref([]);
+	const isInputFocus = ref(false);
 
 	onShow(() => {
 		if (userInfoStore.isLogin) {
@@ -79,15 +85,16 @@
 
 	const region = computed(() => regionRange[regionIndex.value]);
 
-	watch([name, region], () => {
-		if (name.value) {
-			getAutoCompleteList(name.value, region.value);
-		} else {
-			autoCompleteList.value = [];
-		}
-	})
+	// watch([name, region], () => {
+	// 	if (name.value) {
+	// 		getAutoCompleteList(name.value, region.value);
+	// 	} else {
+	// 		autoCompleteList.value = [];
+	// 	}
+	// })
 
 	const getAutoCompleteList = debounce((name, region) => {
+		isAutoCompleteListLoading.value = true;
 		uniCloud.callFunction({
 			name: "get-auto-complete-list",
 			data: {
@@ -100,6 +107,8 @@
 			}
 		}).catch(e => {
 			console.error(e)
+		}).finally(() => {
+			isAutoCompleteListLoading.value = false;
 		})
 	}, 300)
 
@@ -128,6 +137,8 @@
 	const handleLogin = () => {
 		userInfoStore.login();
 	}
+
+	const handleBlur = () => setTimeout(() => isInputFocus.value = false, 10);
 </script>
 
 <style lang="scss" scoped>
@@ -163,11 +174,34 @@
 			height: 320px;
 			position: absolute;
 			background-color: #fff;
+			padding-top: 8px;
 			border-bottom: 1px solid #e5e5e5;
 			z-index: 9999;
 			top: 45px;
 			left: 0;
 			right: 0;
+
+			.loading-container {
+				width: 100%;
+				height: 320px;
+				background-color: rgba(0, 0, 0, 0.3);
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				.loading-icon-container {
+					height: 60px;
+					line-height: 60px;
+					width: 60px;
+					animation-name: loading;
+					animation-duration: 3s;
+					animation-iteration-count: infinite;
+				}
+			}
 		}
 
 		.follow-list-container {
@@ -201,6 +235,20 @@
 				font-size: 12px;
 				color: #3a3a3a;
 			}
+		}
+	}
+
+	@keyframes loading {
+		0% {
+			transform: rotate(0);
+		}
+
+		50% {
+			transform: rotate(0.5turn);
+		}
+
+		100% {
+			transform: rotate(1turn);
 		}
 	}
 </style>
