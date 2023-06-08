@@ -1,11 +1,9 @@
 <script>
+	import uniIdPageInit from '@/uni_modules/uni-id-pages/init.js';
+
 	export default {
-		onLaunch: function() {
-			console.log('App Launch')
-			wx.cloud.init({
-				env: "maplestory-tool-2gb1dfhgc2f90e12",
-				traceUser: true
-			})
+		onLaunch: async function() {
+			await uniIdPageInit()
 		},
 		onShow: function() {
 			console.log('App Show')

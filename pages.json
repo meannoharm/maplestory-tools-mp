@@ -12,43 +12,145 @@
 				"navigationBarTitleText": "角色信息"
 			}
 		},
-		{
-			"path": "pages/rank/Rank",
-			"style": {
-				"navigationBarTitleText": "天梯"
-			}
-		},
+		// {
+		// 	"path": "pages/rank/Rank",
+		// 	"style": {
+		// 		"navigationBarTitleText": "天梯"
+		// 	}
+		// },
 		{
 			"path": "pages/my/My",
 			"style": {
 				"navigationBarTitleText": "我的"
+		}
+		// }, {
+		// 	"path": "uni_modules/uni-id-pages/pages/userinfo/deactivate/deactivate",
+		// 	"style": {
+		// 		"navigationBarTitleText": "注销账号"
+		// 	}
+		// }, {
+		// 	"path": "uni_modules/uni-id-pages/pages/userinfo/userinfo",
+		// 	"style": {
+		// 		"navigationBarTitleText": "个人资料"
+		// 	}
+		// }, {
+		// 	"path": "uni_modules/uni-id-pages/pages/userinfo/bind-mobile/bind-mobile",
+		// 	"style": {
+		// 		"navigationBarTitleText": "绑定手机号码"
+		// 	}
+		// }, {
+		// 	"path": "uni_modules/uni-id-pages/pages/userinfo/cropImage/cropImage",
+		// 	"style": {
+		// 		"navigationBarTitleText": ""
+		// 	}
+		}, {
+			"path": "uni_modules/uni-id-pages/pages/login/login-withoutpwd",
+			"style": {
+				"navigationBarTitleText": ""
 			}
+			// }, {
+			// 	"path": "uni_modules/uni-id-pages/pages/login/login-withpwd",
+			// 	"style": {
+			// 		"navigationBarTitleText": ""
+			// 	}
+			// }, {
+			// 	"path": "uni_modules/uni-id-pages/pages/login/login-smscode",
+			// 	"style": {
+			// 		"navigationBarTitleText": "手机验证码登录"
+			// 	}
+			// }, {
+			// 	"path": "uni_modules/uni-id-pages/pages/register/register",
+			// 	"style": {
+			// 		"navigationBarTitleText": "注册"
+			// 	}
+			// }, {
+			// 	"path": "uni_modules/uni-id-pages/pages/register/register-by-email",
+			// 	"style": {
+			// 		"navigationBarTitleText": "邮箱验证码注册"
+			// 	}
+			// }, {
+			// 	"path": "uni_modules/uni-id-pages/pages/retrieve/retrieve",
+			// 	"style": {
+			// 		"navigationBarTitleText": "重置密码"
+			// 	}
+			// }, {
+			// 	"path": "uni_modules/uni-id-pages/pages/retrieve/retrieve-by-email",
+			// 	"style": {
+			// 		"navigationBarTitleText": "通过邮箱重置密码"
+			// 	}
+			// }, {
+			// 	"path": "uni_modules/uni-id-pages/pages/common/webview/webview",
+			// 	"style": {
+			// 		"enablePullDownRefresh": false,
+			// 		"navigationBarTitleText": ""
+			// 	}
+			// }, {
+			// 	"path": "uni_modules/uni-id-pages/pages/userinfo/change_pwd/change_pwd",
+			// 	"style": {
+			// 		"enablePullDownRefresh": false,
+			// 		"navigationBarTitleText": "修改密码"
+			// 	}
+			// }, {
+			// 	"path": "uni_modules/uni-id-pages/pages/register/register-admin",
+			// 	"style": {
+			// 		"enablePullDownRefresh": false,
+			// 		"navigationBarTitleText": "注册管理员账号"
+			// 	}
+			// }, {
+			// 	"path": "uni_modules/uni-id-pages/pages/userinfo/set-pwd/set-pwd",
+			// 	"style": {
+			// 		"enablePullDownRefresh": false,
+			// 		"navigationBarTitleText": "设置密码"
+			// 	}
+			// }, {
+			// 	"path": "uni_modules/uni-id-pages/pages/userinfo/realname-verify/realname-verify",
+			// 	"style": {
+			// 		"enablePullDownRefresh": false,
+			// 		"navigationBarTitleText": "实名认证"
+			// 	}
+		}, {
+			"path": "pages/my/AboutUs/AboutUs",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/my/Settings/Settings",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
 		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "肥仔枫叶传说",
+		"navigationBarTitleText": "肥宅枫叶传说",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
-	"uniIdRouter": {}
-	// "tabBar": {
-	// 	"borderStyle": "black",
-	// 	"backgroundColor": "#333",
-	// 	"color": "#8F8F94",
-	// 	"selectedColor": "#f33e54",
-	// 	"list": [{
-	// 			"pagePath": "pages/characterSearch/CharacterSearch",
-	// 			"text": "首页"
-	// 		},
-	// 		{
-	// 			"pagePath": "pages/rank/Rank",
-	// 			"text": " 天梯"
-	// 		},
-	// 		{
-	// 			"pagePath": "pages/my/My",
-	// 			"text": "我的"
-	// 		}
-	// 	]
-	// }
+	"uniIdRouter": {},
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#007AFF",
+		"borderStyle": "black",
+		"backgroundColor": "#FFFFFF",
+		"list": [{
+				"pagePath": "pages/characterSearch/CharacterSearch",
+				"iconPath": "static/icons/search.png",
+				"selectedIconPath": "static/icons/search_active.png",
+				"text": "查询"
+			},
+			{
+				"pagePath": "pages/my/My",
+				"iconPath": "static/icons/user.png",
+				"selectedIconPath": "static/icons/user_active.png",
+				"text": "我的"
+			}
+		]
+	},
+	"uniIdRouter": {
+		"resToLogin": true // 自动解析云对象及clientDB的错误码，如果是客户端token不正确或token过期则自动跳转配置的登录页面，配置为false则关闭此行为，默认true
+	}
 }

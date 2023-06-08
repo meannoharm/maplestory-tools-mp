@@ -3,18 +3,51 @@
 		<view class="mask" v-if="!isCharacterExist">
 			<view class="character-not-exist">未查询到用户</view>
 		</view>
-		<uni-card class="basic-info-card" :isFull="true" :title="characterData.Name || '-'"
-			:sub-title="characterData.Class || '-'" :extra="characterData.Server || '-'">
+
+		<uni-card class="basic-info-card" :isFull="true">
+			<template v-slot:title>
+				<view class="title-container">
+					<view class="info">
+						<div class="main">{{ characterData.Name || "-" }}</div>
+						<div class="sub">
+							{{ characterData.Class || "-" }} |
+							{{ characterData.Server || "-" }}
+						</div>
+					</view>
+					<view class="operation" v-if="characterData.Name">
+						<uni-fav :checked="isFollowed" :contentText="{ contentDefault: '关注', contentFav: '已关注' }"
+							@click="handleFavClick" />
+					</view>
+				</view>
+			</template>
 			<image class="character-image" :src="characterData.CharacterImageURL" mode="widthFix"></image>
 			<view class="level-content">等级 {{ characterData.Level }} ({{ characterData.EXPPercent }}%)
 			</view>
 			<view class="global-rank sub-content">全球排名
-				{{characterData.GlobalRanking ? numeral(characterData.GlobalRanking).format("0,0") : '-'}} | 职业全球排名
-				{{characterData.ClassRank ? numeral(characterData.ClassRank).format("0,0") : '-'}}
+				{{
+          characterData.GlobalRanking
+            ? numeral(characterData.GlobalRanking).format("0,0")
+            : "-"
+        }}
+				| 职业全球排名
+				{{
+          characterData.ClassRank
+            ? numeral(characterData.ClassRank).format("0,0")
+            : "-"
+        }}
 			</view>
 			<view class="server-rank sub-content">服务器排名
-				{{characterData.ServerRank ? numeral(characterData.ServerRank).format("0,0") : '-'}} | 职业服务器排名
-				{{ characterData.ServerClassRanking? numeral(characterData.ServerClassRanking).format("0,0"): '-' }}
+				{{
+          characterData.ServerRank
+            ? numeral(characterData.ServerRank).format("0,0")
+            : "-"
+        }}
+				| 职业服务器排名
+				{{
+          characterData.ServerClassRanking
+            ? numeral(characterData.ServerClassRanking).format("0,0")
+            : "-"
+        }}
 			</view>
 		</uni-card>
 		<view style="height: 8px" />
@@ -30,15 +63,27 @@
 			:thumbnail="iconPathMap[`${legionLevel[0]}_${legionLevel[1]}`]" :sub-title="characterData.LegionLevel + ''"
 			:isFull="true">
 			<view class="sub-content">联盟排名
-				{{characterData.LegionRank ? numeral(characterData.LegionRank).format("0,0") : '-'}}
+				{{
+          characterData.LegionRank
+            ? numeral(characterData.LegionRank).format("0,0")
+            : "-"
+        }}
 			</view>
 			<view class="sub-content">联盟战力
-				{{ characterData.LegionPower ? numeral( characterData.LegionPower).format("0,0") : '-'}}
+				{{
+          characterData.LegionPower
+            ? numeral(characterData.LegionPower).format("0,0")
+            : "-"
+        }}
 			</view>
 			<view class="sub-content">
 				<image class="legion-icon" :src="iconPathMap.Legion_Coin"></image>
 				每日联盟币
-				{{characterData.LegionCoinsPerDay? numeral(characterData.LegionCoinsPerDay).format("0,0") : '-'}}
+				{{
+          characterData.LegionCoinsPerDay
+            ? numeral(characterData.LegionCoinsPerDay).format("0,0")
+            : "-"
+        }}
 			</view>
 		</uni-card>
 	</view>
@@ -46,7 +91,9 @@
 
 <script setup>
 	import {
-		onLoad
+		onLoad,
+		onShow,
+		onShareAppMessage
 	} from "@dcloudio/uni-app";
 	import {
 		ref,
@@ -59,8 +106,12 @@
 		legionRankMap,
 		iconPathMap,
 		jobMap
-	} from '/constant/index.js'
+	} from "/constant/index.js";
+	import {
+		useUserInfoStore
+	} from "/store/userInfo.js";
 
+	const userInfoStore = useUserInfoStore();
 	const baseInfo = ref({
 		region: "",
 		name: "",
@@ -82,14 +133,15 @@
 	onMounted(() => {
 		uni.showLoading({
 			title: "查询中",
-			mask: true
-		})
-		uniCloud.callFunction({
+			mask: true,
+		});
+		uniCloud
+			.callFunction({
 				name: "get-maplestory-character-info",
 				data: {
 					userName: baseInfo.value.name,
-					region: baseInfo.value.region
-				}
+					region: baseInfo.value.region,
+				},
 			})
 			.then((res) => {
 				if (res.result.data) {
@@ -102,28 +154,77 @@
 				console.error(e);
 			})
 			.finally(() => {
-				uni.hideLoading()
+				uni.hideLoading();
 			});
 	});
 
+	onShow(() => {
+		if (userInfoStore.isLogin) {
+			userInfoStore.getFollowCharacterList();
+		}
+	})
+
+	onShareAppMessage(() => ({
+		title: "肥宅冒险岛",
+		path: `/pages/characterDetail/CharacterDetail?name=${baseInfo.value.name}&region=${baseInfo.value.region}`,
+		imageUrl: characterData.value.CharacterImageURL,
+		desc: `${characterData.value.Name} | ${characterData.value.Class} | Lv.${characterData.value.Level} | ${characterData.value.Server}`,
+	}));
+
+	uni.showShareMenu({
+		title: "肥宅冒险岛",
+		path: `/pages/characterDetail/CharacterDetail?name=${baseInfo.value.name}&region=${baseInfo.value.region}`,
+		imageUrl: characterData.value.CharacterImageURL,
+		desc: `${characterData.value.Name} | ${characterData.value.Class} | Lv.${characterData.value.Level} | ${characterData.value.Server}`,
+	});
+
 	const legionLevel = computed(() => {
-		const levelList = ["Nameless", "Renowned", "Heroic", "Legendary", "Supreme"]
+		const levelList = ["Nameless", "Renowned", "Heroic", "Legendary", "Supreme"];
 		let levelIndex = 0;
 		let star = 0;
 		if (characterData.value.LegionLevel >= 500) {
-			levelIndex = parseInt((characterData.value.LegionLevel - 500) / 2500)
-			star = parseInt((characterData.value.LegionLevel - 500 - (levelIndex * 2500)) / 500) + 1
+			levelIndex = parseInt((characterData.value.LegionLevel - 500) / 2500);
+			star =
+				parseInt(
+					(characterData.value.LegionLevel - 500 - levelIndex * 2500) / 500
+				) + 1;
 		}
-		return [levelList[levelIndex], star]
-	})
+		return [levelList[levelIndex], star];
+	});
+
+	const isFollowed = computed(() => {
+		return (
+			userInfoStore.followCharacterList.findIndex((item) => {
+				console.log(item, baseInfo.value)
+				return (
+					item.character_name === baseInfo.value.name &&
+					item.character_region === baseInfo.value.region
+				);
+			}) !== -1
+		);
+	});
+
+	const handleFavClick = () => {
+		if (!userInfoStore.isLogin) {
+			userInfoStore.login();
+			return;
+		}
+		if (isFollowed.value) {
+			userInfoStore.unFollowCharacter(baseInfo.value.name, baseInfo.value.region);
+		} else {
+			userInfoStore.followCharacter(baseInfo.value.name, baseInfo.value.region);
+		}
+	};
 </script>
 
 <style lang="scss" scoped>
 	.character-detial-container {
 		.mask {
-			position: fixed;
+			position: absolute;
 			top: 0;
 			left: 0;
+			right: 0;
+			bottom: 0;
 			width: 100vw;
 			height: 100vh;
 			background-color: rgba(0, 0, 0, 0.5);
@@ -139,6 +240,30 @@
 		}
 
 		.basic-info-card {
+			.title-container {
+				display: flex;
+				align-items: center;
+				border-bottom: 1px #ebeef5 solid;
+				flex-direction: row;
+				padding: 10px;
+				overflow: hidden;
+
+				.info {
+					margin-right: auto;
+
+					.main {
+						font-size: 15px;
+						color: #3a3a3a;
+					}
+
+					.sub {
+						font-size: 12px;
+						margin-top: 5px;
+						color: #909399;
+					}
+				}
+			}
+
 			.character-image {
 				width: 120px;
 				height: 120px;

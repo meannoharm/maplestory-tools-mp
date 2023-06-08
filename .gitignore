@@ -2,3 +2,6 @@ node_modules
 # uni_modules
 unpackage
 yarn-error.log
+
+# 有appsecret信息，不要上传
+uni_modules/uni-config-center/uniCloud/cloudfunctions/common/uni-config-center/uni-id/config.json
