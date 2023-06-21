@@ -22,27 +22,27 @@
 			"path": "pages/my/My",
 			"style": {
 				"navigationBarTitleText": "我的"
-		}
-		// }, {
-		// 	"path": "uni_modules/uni-id-pages/pages/userinfo/deactivate/deactivate",
-		// 	"style": {
-		// 		"navigationBarTitleText": "注销账号"
-		// 	}
-		// }, {
-		// 	"path": "uni_modules/uni-id-pages/pages/userinfo/userinfo",
-		// 	"style": {
-		// 		"navigationBarTitleText": "个人资料"
-		// 	}
-		// }, {
-		// 	"path": "uni_modules/uni-id-pages/pages/userinfo/bind-mobile/bind-mobile",
-		// 	"style": {
-		// 		"navigationBarTitleText": "绑定手机号码"
-		// 	}
-		// }, {
-		// 	"path": "uni_modules/uni-id-pages/pages/userinfo/cropImage/cropImage",
-		// 	"style": {
-		// 		"navigationBarTitleText": ""
-		// 	}
+			}
+			// }, {
+			// 	"path": "uni_modules/uni-id-pages/pages/userinfo/deactivate/deactivate",
+			// 	"style": {
+			// 		"navigationBarTitleText": "注销账号"
+			// 	}
+			// }, {
+			// 	"path": "uni_modules/uni-id-pages/pages/userinfo/userinfo",
+			// 	"style": {
+			// 		"navigationBarTitleText": "个人资料"
+			// 	}
+			// }, {
+			// 	"path": "uni_modules/uni-id-pages/pages/userinfo/bind-mobile/bind-mobile",
+			// 	"style": {
+			// 		"navigationBarTitleText": "绑定手机号码"
+			// 	}
+			// }, {
+			// 	"path": "uni_modules/uni-id-pages/pages/userinfo/cropImage/cropImage",
+			// 	"style": {
+			// 		"navigationBarTitleText": ""
+			// 	}
 		}, {
 			"path": "uni_modules/uni-id-pages/pages/login/login-withoutpwd",
 			"style": {
@@ -111,7 +111,7 @@
 		}, {
 			"path": "pages/my/AboutUs/AboutUs",
 			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "关于我们",
 				"enablePullDownRefresh": false
 			}
 
@@ -122,8 +122,33 @@
 				"enablePullDownRefresh": false
 			}
 
+		}, {
+			"path": "pages/tools/tools",
+			"style": {
+				"navigationBarTitleText": "工具",
+				"enablePullDownRefresh": false
+			}
+
 		}
-	],
+	    ,{
+            "path" : "pages/characterSearch/search/search",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/tools/imageInfo/imageInfo",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "肥宅枫叶传说",
@@ -141,6 +166,12 @@
 				"iconPath": "static/icons/search.png",
 				"selectedIconPath": "static/icons/search_active.png",
 				"text": "查询"
+			},
+			{
+				"pagePath": "pages/tools/tools",
+				"text": "工具",
+				"iconPath": "static/icons/tools.png",
+				"selectedIconPath": "static/icons/tools_active.png"
 			},
 			{
 				"pagePath": "pages/my/My",

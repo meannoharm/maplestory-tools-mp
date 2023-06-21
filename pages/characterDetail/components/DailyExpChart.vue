@@ -56,11 +56,11 @@
 		}
 
 		return {
-			categories,
+			categories: categories.reverse(),
 			series: [{
 				format: "formatCompactNumber",
 				name: "经验",
-				data,
+				data: data.reverse(),
 			}, ],
 		};
 	});

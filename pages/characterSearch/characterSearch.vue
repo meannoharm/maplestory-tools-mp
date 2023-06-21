@@ -1,30 +1,15 @@
 <template>
 	<view class="character-search-container">
-		<view class="search-container">
-			<!-- 			<uni-data-select class="region-select" v-model="region" :localdata="regionRange"
-				:clear="false"></uni-data-select> -->
-			<picker @change="bindPickerChange" :value="regionIndex" :range="regionRange">
-				<view class="picker-content">
-					<view class="text">{{regionRange[regionIndex]}}</view>
-					<uni-icons type="bottom" size="14"></uni-icons>
-				</view>
-			</picker>
-			<uni-easyinput prefixIcon="search" class="name-input" placeholder="角色名称" confirmType="search" v-model="name"
-				:clearable="true" @confirm="handleSearchConfirm" @focus="isInputFocus = true" @blur="handleBlur">
-			</uni-easyinput>
-		</view>
-<!-- 		<scroll-view v-if="isInputFocus && name" class="auto-complete-list-container" scroll-y="true">
-			<view v-if="isAutoCompleteListLoading" class="loading-container">
-				<view class="loading-icon-container">
-					<uni-icons class="loading-icon" color="#fff" type="spinner-cycle" size="60"></uni-icons>
-				</view>
+		<view class="search-container" @click.stop="handleSearchClick">
+			<view class="picker-content">
+				<view class="text">gms</view>
+				<uni-icons type="bottom" size="14"></uni-icons>
 			</view>
-			<uni-list v-if="autoCompleteList.length > 0" class="auto-complete-list">
-				<uni-list-item v-for="autoCompleteItem in autoCompleteList" :key="autoCompleteItem.Name"
-					:title="autoCompleteItem.Name" :rightText="regionMap[autoCompleteItem.Region]" clickable
-					@click="handleAutoCompleteClick(autoCompleteItem)" />
-			</uni-list>
-		</scroll-view> -->
+			<view class="name-input">
+				<uni-icons type="search" class="search-icon" size="22" color="#c0c4cc" />
+				<view class="text">请输入角色名称</view>
+			</view>
+		</view>
 		<uni-section title="关注角色" type="line">
 			<uni-list v-if="userInfoStore.isLogin && userInfoStore.followCharacterList.length > 0">
 				<uni-list-item v-for="followCharacter in userInfoStore.followCharacterList"
@@ -36,6 +21,7 @@
 				<button class="button" size="mini" @click="handleLogin">点击登录</button>
 				<view class="sub-text">登录即可关注角色</view>
 			</view>
+			<view v-else-if="userInfoStore.isFollowListLoading" class="tips-container">加载中</view>
 			<view v-else class="tips-container">
 				<view class="text">搜索查看详情后关注</view>
 			</view>
@@ -46,6 +32,7 @@
 <script setup>
 	import {
 		onShow,
+		onShareAppMessage
 	} from "@dcloudio/uni-app";
 	import {
 		computed,
@@ -53,9 +40,6 @@
 		ref,
 		onMounted
 	} from 'vue';
-	import {
-		debounce
-	} from "lodash";
 	import {
 		useUserInfoStore
 	} from "/store/userInfo.js";
@@ -65,67 +49,14 @@
 
 	const userInfoStore = useUserInfoStore();
 
-	const regionRange = ["gms", "ems"]
-
-	const name = ref("");
-	const regionIndex = ref(0);
-	const isAutoCompleteListLoading = ref(false);
-	const autoCompleteList = ref([]);
-	const isInputFocus = ref(false);
-
 	onShow(() => {
 		if (userInfoStore.isLogin) {
 			userInfoStore.getFollowCharacterList();
 		}
 	})
 
-	const bindPickerChange = function(e) {
-		regionIndex.value = e.detail.value;
-	}
-
-	const region = computed(() => regionRange[regionIndex.value]);
-
-	// watch([name, region], () => {
-	// 	if (name.value) {
-	// 		getAutoCompleteList(name.value, region.value);
-	// 	} else {
-	// 		autoCompleteList.value = [];
-	// 	}
-	// })
-
-	const getAutoCompleteList = debounce((name, region) => {
-		isAutoCompleteListLoading.value = true;
-		uniCloud.callFunction({
-			name: "get-auto-complete-list",
-			data: {
-				input: name,
-				region: region
-			}
-		}).then(res => {
-			if (res.result.data) {
-				autoCompleteList.value = res.result.data;
-			}
-		}).catch(e => {
-			console.error(e)
-		}).finally(() => {
-			isAutoCompleteListLoading.value = false;
-		})
-	}, 300)
-
 	const handleFollowCharacterClick = (followCharacter) => {
 		toDetail(followCharacter.character_name, followCharacter.character_region)
-	}
-
-	const handleAutoCompleteClick = (autoCompleteItem) => {
-		// autoCompleteItem.Region:
-		// 1: gms
-		// 2: ems
-
-		toDetail(autoCompleteItem.Name, regionMap[autoCompleteItem.Region])
-	}
-
-	const handleSearchConfirm = () => {
-		toDetail(name.value, region.value)
 	}
 
 	const toDetail = (name, region) => {
@@ -134,11 +65,23 @@
 		})
 	}
 
+	const handleSearchClick = () => uni.navigateTo({
+		url: "/pages/characterSearch/search/search"
+	})
+
 	const handleLogin = () => {
 		userInfoStore.login();
 	}
 
-	const handleBlur = () => setTimeout(() => isInputFocus.value = false, 10);
+	uni.showShareMenu({
+		withShareTicket: true,
+	});
+	
+	onShareAppMessage(() => ({
+		title: "冒险岛GMS角色查询",
+		path: `/pages/characterSearch/CharacterSearch`,
+		imageUrl: "https://mp-19037f1d-5a0a-45fb-b476-e7007e9c6546.cdn.bspapp.com/assets/images/maplestory-tools.png",
+	}));
 </script>
 
 <style lang="scss" scoped>
@@ -166,6 +109,28 @@
 
 				.text {
 					margin-right: 4px;
+				}
+			}
+
+			.name-input {
+				display: flex;
+				width: 100%;
+				font-size: 14px;
+				border-color: #e5e5e5;
+				background-color: #fff;
+				flex-direction: row;
+				align-items: center;
+				border: 1px solid #dcdfe6;
+				border-radius: 4px;
+				height: 35px;
+
+				.search-icon {
+					padding: 0 5px;
+				}
+
+				.text {
+					font-size: 12px;
+					color: #999;
 				}
 			}
 		}

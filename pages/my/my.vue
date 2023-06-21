@@ -28,6 +28,19 @@
 	import {
 		useUserInfoStore
 	} from "/store/userInfo.js";
+	import {
+		onShareAppMessage
+	} from "@dcloudio/uni-app";
+	
+	uni.showShareMenu({
+		withShareTicket: true,
+	});
+	
+	onShareAppMessage(() => ({
+		title: "冒险岛GMS角色查询",
+		path: `/pages/characterSearch/CharacterSearch`,
+		imageUrl: "https://mp-19037f1d-5a0a-45fb-b476-e7007e9c6546.cdn.bspapp.com/assets/images/maplestory-tools.png",
+	}));
 
 	const userInfoStore = useUserInfoStore();
 

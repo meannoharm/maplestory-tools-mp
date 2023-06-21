@@ -54,6 +54,7 @@
 		<uni-card v-if="characterData.GraphData && characterData.GraphData.length > 0" class="exp-info-card" title="日经验"
 			:isFull="true">
 			<view class="exp-chart-container">
+				<view class="detail last">根据最新一天肝度，升级还需 <text class="days">{{needDays}}</text> 天</view>
 				<DailyExpChart :graphData="characterData.GraphData" />
 			</view>
 		</uni-card>
@@ -168,18 +169,25 @@
 	})
 
 	onShareAppMessage(() => ({
-		title: "肥宅冒险岛",
 		path: `/pages/characterDetail/CharacterDetail?name=${baseInfo.value.name}&region=${baseInfo.value.region}`,
 		imageUrl: characterData.value.CharacterImageURL,
-		desc: `${characterData.value.Name} | ${characterData.value.Class} | Lv.${characterData.value.Level} | ${characterData.value.Server}`,
+		title: `${characterData.value.Name} | ${characterData.value.Class} | Lv.${characterData.value.Level} | ${characterData.value.Server}`,
 	}));
 
 	uni.showShareMenu({
-		title: "肥宅冒险岛",
-		path: `/pages/characterDetail/CharacterDetail?name=${baseInfo.value.name}&region=${baseInfo.value.region}`,
-		imageUrl: characterData.value.CharacterImageURL,
-		desc: `${characterData.value.Name} | ${characterData.value.Class} | Lv.${characterData.value.Level} | ${characterData.value.Server}`,
+		withShareTicket: true,
 	});
+
+	const needDays = computed(() => {
+		if (characterData.value.GraphData) {
+			const graphDataLength = characterData.value.GraphData.length;
+			const expToNextLevel = characterData.value.GraphData[graphDataLength - 1].EXPToNextLevel;
+			const day1 = characterData.value.GraphData[graphDataLength - 2].EXPDifference ? Math.ceil(
+				expToNextLevel /
+				characterData.value.GraphData[graphDataLength - 2].EXPDifference) : "-";
+			return day1;
+		} else return '-'
+	})
 
 	const legionLevel = computed(() => {
 		const levelList = ["Nameless", "Renowned", "Heroic", "Legendary", "Supreme"];
@@ -284,7 +292,19 @@
 		.exp-info-card {
 			.exp-chart-container {
 				width: 100%;
-				height: 300px;
+
+				.detail {
+					font-size: 12px;
+					color: #999;
+
+					&.last {
+						margin-bottom: 8px;
+					}
+					
+					.days {
+						font-weight: bold;
+					}
+				}
 			}
 		}
 

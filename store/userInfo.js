@@ -7,16 +7,18 @@ import {
 
 const db = uniCloud.database();
 const uniIdCo = uniCloud.importObject('uni-id-co');
-const hostUserInfo = uni.getStorageSync('uni-id-pages-userInfo')||{}
+const hostUserInfo = uni.getStorageSync('uni-id-pages-userInfo') || {}
 
 export const useUserInfoStore = defineStore('userInfo', {
 	state: () => ({
+		isFollowListLoading: false,
 		followCharacterList: [],
 		userInfo: hostUserInfo,
 		isLogin: Object.keys(hostUserInfo).length != 0,
 	}),
 	actions: {
 		getFollowCharacterList() {
+			this.isFollowListLoading = true;
 			db.collection('maplestory-follow-characters')
 				.where("follow_uid==$cloudEnv_uid").get()
 				.then(({
@@ -35,7 +37,7 @@ export const useUserInfoStore = defineStore('userInfo', {
 					if (JQLTokenErrorCode.includes(err.code)) {
 						this.clearUserInfo();
 					}
-				})
+				}).finally(() => this.isFollowListLoading = false)
 		},
 		followCharacter(name, region) {
 			db.collection('maplestory-follow-characters')
@@ -99,7 +101,7 @@ export const useUserInfoStore = defineStore('userInfo', {
 				icon: 'none'
 			})
 		},
-		clearUserInfo () {
+		clearUserInfo() {
 			this.isLogin = false;
 			this.userInfo = {}
 		}
