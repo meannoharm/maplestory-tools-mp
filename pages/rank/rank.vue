@@ -1,13 +1,7 @@
 <template>
-	<view>
-		
-	</view>
+  <view> </view>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts"></script>
 
-</script>
-
-<style lang="less">
-
-</style>
+<style lang="less"></style>
