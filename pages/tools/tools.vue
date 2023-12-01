@@ -35,6 +35,23 @@
   }));
 
   const toolList = [
+    // {
+    //   title: '强化模拟',
+    //   active: () => {
+    //     uni.navigateTo({
+    //       url: './starForce/ItemConfig',
+    //     });
+    //   },
+	// },
+	// {
+	// 	title: "属性等效计算器",
+	// 	icon: "",
+	// 	active: () => {
+	// 		uni.navigateTo({
+	// 			url: './statEquivalentCalculator/statEquivalentCalculator'
+	// 		})
+	// 	}
+	// },
     {
       title: '六岛打炮',
       icon: 'https://mp-19037f1d-5a0a-45fb-b476-e7007e9c6546.cdn.bspapp.com/assets/icons/dapao.png',
@@ -53,15 +70,15 @@
         });
       },
     },
-    {
-      title: '纸娃娃',
-      icon: 'https://mp-19037f1d-5a0a-45fb-b476-e7007e9c6546.cdn.bspapp.com/tools-image/zhiwawa.png',
-      active: () => {
-        uni.navigateToMiniProgram({
-          appId: 'wxc15800ea409b3a0d',
-        });
-      },
-    },
+    // {
+    //   title: '纸娃娃',
+    //   icon: 'https://mp-19037f1d-5a0a-45fb-b476-e7007e9c6546.cdn.bspapp.com/tools-image/zhiwawa.png',
+    //   active: () => {
+    //     uni.navigateToMiniProgram({
+    //       appId: 'wxc15800ea409b3a0d',
+    //     });
+    //   },
+    // },
   ];
   const change = (e) => {
     toolList[e.detail.index].active();

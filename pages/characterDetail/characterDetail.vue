@@ -229,7 +229,6 @@
   const isFollowed = computed(() => {
     return (
       userInfoStore.followCharacterList.findIndex((item) => {
-        console.log(item, baseInfo.value);
         return (
           item.character_name === baseInfo.value.name &&
           item.character_region === baseInfo.value.region
@@ -264,7 +263,7 @@
       bottom: 0;
       width: 100vw;
       height: 100vh;
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: $uni-bg-color-mask;
       z-index: 999;
       display: flex;
       align-items: center;
@@ -290,13 +289,13 @@
 
           .main {
             font-size: 15px;
-            color: #3a3a3a;
+            color: $uni-text-color;
           }
 
           .sub {
             font-size: 12px;
             margin-top: 5px;
-            color: #909399;
+            color: $uni-text-color-grey;
           }
         }
       }
@@ -312,7 +311,7 @@
 
       .sub-content {
         font-size: 12px;
-        color: #999;
+        color: $uni-text-color-grey;
       }
     }
 
@@ -322,7 +321,7 @@
 
         .detail {
           font-size: 12px;
-          color: #999;
+          color: $uni-text-color-grey;
 
           &.last {
             margin-bottom: 8px;
@@ -338,7 +337,7 @@
     .legion-info-card {
       .sub-content {
         font-size: 12px;
-        color: #999;
+        color: $uni-text-color-grey;
         display: flex;
         align-items: center;
 

@@ -1,0 +1,104 @@
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": true,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"name": {
+			"bsonType": "string",
+			"description": "物品名称"
+		},
+		"level": {
+			"bsonType": "int",
+			"description": "物品等级"
+		},
+		"class": {
+			"bsonType": "string",
+			"description": "物品类型"
+		},
+		"type": {
+			"bsonType": "string",
+			"description": "物品位置"
+		},
+		"speed": {
+			"bsonType": "string",
+			"description": "攻击速度"
+		},
+		"job": {
+			"bsonType": "array",
+			"description": "职业",
+			"arrayType": "string"
+		},
+		"mstat": {
+			"bsonType": "string",
+			"description": "主属性"
+		},
+		"pstat": {
+			"bsonType": "string",
+			"description": "副属性"
+		},
+		"flame_type": {
+			"bsonType": "number"
+		},
+		"bstat": {
+			"bsonType": "object",
+			"properties": {
+
+			}
+		},
+		"req": {
+			"bsonType": "object",
+			"properties": {
+				"str": {
+					"bsonType": "int"
+				},
+				"dex": {
+					"bsonType": "int"
+				},
+				"int": {
+					"bsonType": "int"
+				},
+				"luk": {
+					"bsonType": "int"
+				}
+			}
+		},
+		"img": {
+			"bsonType": "string",
+			"description": "物品图片"
+		},
+		"upgrades": {
+			"bsonType": "int",
+			"description": "物品强化次数"
+		},
+		"hammers_added": {
+			"bsonType": "int",
+			"description": "物品锤子次数"
+		},
+		"starforce": {
+			"bsonType": "boolean"
+		},
+		"enhanceable": {
+			"bsonType": "boolean"
+		},
+		"scrollable": {
+			"bsonType": "boolean"
+		},
+		"img_type": {
+			"bsonType": "string"
+		},
+		"classify": {
+			"bsonType": "string"
+		},
+		"detail_type": {
+			"bsonType": "string"
+		}
+	}
+}
